@@ -16,5 +16,11 @@ npm install @types/express  # js 라이브러리 타입파일 알기 편하게
 #디펜던시
 npm install winston
 
+#aws/sigV4
+npm install @smithy/signature-v4
+
+
+# // npm install @aws-sdk/signature-v4 @aws-crypto/sha256-js @aws-sdk/protocol-http
+
 
 

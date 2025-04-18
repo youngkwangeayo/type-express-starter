@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import logger from './config/logger/logger';
+import logger from './config/logger.config';
 import router from './router';
 
 dotenv.config();
