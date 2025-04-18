@@ -1,13 +1,16 @@
-import { createLogger, format, transports } from 'winston';
+import { createLogger, format, transports, Logger } from 'winston';
+import { TransformableInfo } from 'logform'; // logform은 winston 내부 포맷 타입
 
 const logFormat = format.combine(
   format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-  format.printf(({ timestamp, level, message }) => {
-    return `[${level.toUpperCase()}] [${timestamp}] ${message}`;
+  format.printf((info: TransformableInfo) => {
+    const { timestamp, level, message } = info;
+    const msg = typeof message === 'string' ? message : JSON.stringify(message, null, 2);
+    return `[${level.toUpperCase()}] [${timestamp}] ${msg}`;
   })
 );
 
-const logger = createLogger({
+const logger: Logger = createLogger({
   level: 'info',
   format: logFormat,
   transports: [
