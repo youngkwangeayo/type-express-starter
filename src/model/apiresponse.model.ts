@@ -1,6 +1,6 @@
 
 export interface APIResopnse<T = any> {
-    conde : number;
+    code : number;
     state : 200;
     payLoad : T;
 }

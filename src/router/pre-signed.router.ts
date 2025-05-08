@@ -1,21 +1,16 @@
 import { NextFunction, Request, Response, Router } from "express";
 import logger from "../config/logger.config";
+import { preSignedService } from "../service/pre-signed.service";
 
 const preSignedRouter = Router();
+// constroller
 
 
-
-preSignedRouter.get('/', async(req : Request, res : Response, next : NextFunction)=>{
-    // console.log(req,res,next);
-    // res.json({test: 'good'});
-    res.send({test:'test'})
-    // logger.debug(req,res,next)
-});
 
 preSignedRouter.get('/mqtt', async(req : Request, res : Response, next : NextFunction)=>{
-    // console.log(req,res,next);
-    // res.json({test: 'good'});
-    res.send({test:'test'})
+  
+    const test = await preSignedService.getMqttUrl();
+    res.send({test:test});
     // logger.debug(req,res,next)
 });
 

@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import logger from './config/logger.config';
 import router from './router';
+import errorHandler from './config/error.config';
 
 dotenv.config();
 
@@ -16,11 +17,11 @@ app.get('/', (req, res) => {
   res.send('Hello, TypeScript + Express!');
 });
 
+app.use( errorHandler );
 app.use('/api', router);
-
 
 app.listen(PORT, () => {
     logger.debug(`Server is running on http://localhost:${PORT}`);
-    logger.info("test");
-    logger.debug("det")
+    // logger.info("test");
+    // logger.debug("det")
 });
