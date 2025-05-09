@@ -3,4 +3,4 @@
 /dist
 /logs
 /.vscode
-#/.env
+/.env

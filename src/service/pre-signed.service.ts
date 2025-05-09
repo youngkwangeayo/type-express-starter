@@ -27,12 +27,12 @@ async function createSignatureV4Url() {
         method: "GET",
         protocol: "wss:",
         path: "/mqtt",
-        hostname: "ac9hu6rgxhrxm-ats.iot.ap-northeast-2.amazonaws.com", //endpoint
+        hostname: process.env.MQTT_ENDPOINT, //endpoint
         
         query: {
             "X-Amz-Date": new Date().toISOString(),
         },
-        headers:  { host: "ac9hu6rgxhrxm-ats.iot.ap-northeast-2.amazonaws.com", }
+        headers:  { host: process.env.MQTT_ENDPOINT as string, }
     })
 
     const signer = new SignatureV4({
