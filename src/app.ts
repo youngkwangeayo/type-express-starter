@@ -14,8 +14,9 @@ app.use(express.urlencoded({ limit: "300mb", extended: false }));
 app.use(express.json({ limit: "300mb" }));
 // app.use('/vol', express.static(process.env.storagePath));
 
-app.get('/', (req, res) => {
-  res.send('Hello, TypeScript + Express!');
+
+app.use('/ping', (_,res,_n)=>{
+  res.send('pong');
 });
 
 app.use('/api', router);
