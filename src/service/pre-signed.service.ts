@@ -3,22 +3,32 @@ import { HttpRequest } from '@smithy/protocol-http'
 import logger from "../config/logger.config";
 
 import { defaultProvider } from '@aws-sdk/credential-provider-node';
-// AwsCredentialIdentity
+
 import { Sha256 } from '@aws-crypto/sha256-js';
 import { debug } from "console";
-import { APIResopnse } from "../model/apiresponse.model";
+import { APIError, APIResopnse } from "../model/apiresponse.model";
+import redis from "../config/redis.config";
 
-async function getMqttUrl() {
+
+const CACHE_MQTT_URL_KEY ='SignedMqttUrl';  // mqtt url reids key
+const CACHE_MQTT_URL_EXPIRE_TIME = 3600;    // mqtt url reids exprie Time
+
+
+async function getMqttUrl() : Promise<APIResopnse> {
     
-    const path = await createSignatureV4Url();
+    const cacheResult = await redis.exists( CACHE_MQTT_URL_KEY );
 
-    const apiresponse : APIResopnse<any> = {
-        code : 0,
-        state : 200,
-        payLoad : {SignedUrl :  path}
-    };
+    let path : string | null;
+
+    if (cacheResult == 0)  path = await createSignatureV4Url();
+    else path =  await redis.get(CACHE_MQTT_URL_KEY);
+
+    if ( path == null) throw new APIError(-1, 500, '','');
+
+    const apiresponse = new APIResopnse( {SignedUrl :  path} );
     return apiresponse;
 };
+
 
 
 async function createSignatureV4Url() {
@@ -33,7 +43,7 @@ async function createSignatureV4Url() {
             "X-Amz-Date": new Date().toISOString(),
         },
         headers:  { host: process.env.MQTT_ENDPOINT as string, }
-    })
+    });
 
     const signer = new SignatureV4({
         service: 'iotdevicegateway',
@@ -53,6 +63,8 @@ async function createSignatureV4Url() {
     
     const signedFullURL: string = `${signed.protocol}//${signed.hostname}${signed.path}?${queryParams.toString()}`;
     
+    await redis.setExpireValue(CACHE_MQTT_URL_KEY, signedFullURL, CACHE_MQTT_URL_EXPIRE_TIME);
+
     logger.debug(signedFullURL);
     debug(signedFullURL);
     return signedFullURL;
