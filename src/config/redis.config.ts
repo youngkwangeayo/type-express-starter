@@ -27,7 +27,7 @@ type ExtendRedisClient = RedisClientType & {
 
 const redis = createClient({
     socket: {
-      port: 56379,
+      port: 6379,
       host: '127.0.0.1'
     },
 }) as ExtendRedisClient;

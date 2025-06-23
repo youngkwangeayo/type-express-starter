@@ -26,7 +26,7 @@ export interface IAPIErrorREsopnse {
 
 
 
-export class APIError implements IAPIErrorREsopnse {
+export class APIError extends Error implements IAPIErrorREsopnse{
 
     code : number = -1;
     state : number;
@@ -34,6 +34,7 @@ export class APIError implements IAPIErrorREsopnse {
     reason : string;
 
     constructor( code : number, state : number, message : string, reason : string ){
+        super();
         this.code = code;
         this.state = state;
         this.message = message ?? '';

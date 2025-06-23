@@ -1,0 +1,35 @@
+
+// const preSignedRouter = Router();
+
+import { NextFunction, Request, Response, Router } from "express";
+import { APIError, APIResopnse } from "../model/apiresponse.model";
+
+// constroller
+
+// const helperRouter = Router();
+const helperRouter = Router();
+
+helperRouter.get('/', async(req :Request, res: Response, next : NextFunction)=>{
+    throw new APIError( 0 , 500, "테스트", "-4");
+    res.json( {test : "good"});
+});
+
+helperRouter.post('/test1', async(req :Request, res: Response, next : NextFunction)=>{
+
+    const result = new APIResopnse( {test : "post good"} );
+    // throw new Error("에러");
+
+    // throw new APIError( 0 , 400, "테스트", "-4");
+    res.json( result );
+});
+
+
+export default helperRouter;
+
+// preSignedRouter.get('/test',(req, res, next)=>{
+
+//     // redis.get('testKEY_ONE');
+//     res.send("good");
+// })
+
+// export default preSignedRouter;
