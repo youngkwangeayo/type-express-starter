@@ -4,7 +4,7 @@
   "description": "",
   "main": "/src/app.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/app.ts",
+    "dev": "ts-node-dev src/app.ts",
     "build": "tsc",
     "start": "node dist/src/app.js"
   },
@@ -12,9 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-crypto/sha256-js": "^5.2.0",
-    "@aws-sdk/credential-provider-node": "^3.804.0",
-    "@smithy/signature-v4": "^5.0.2",
+    "@types/cors": "^2.8.18",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "n-helper-server": "file:",
