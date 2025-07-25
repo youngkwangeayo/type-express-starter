@@ -10,13 +10,13 @@ import { APIError, APIResopnse } from "../model/apiresponse.model";
 const helperRouter = Router();
 
 helperRouter.get('/', async(req :Request, res: Response, next : NextFunction)=>{
-    throw new APIError( 0 , 500, "테스트", "-4");
+    // throw new APIError( 0 , 500, "테스트", "-4");
     res.json( {test : "good"});
 });
 
 helperRouter.post('/test1', async(req :Request, res: Response, next : NextFunction)=>{
-
-    const result = new APIResopnse( {test : "post good"} );
+    console.log(req.body)
+    const result = new APIResopnse( {test : req.body} );
     // throw new Error("에러");
 
     // throw new APIError( 0 , 400, "테스트", "-4");

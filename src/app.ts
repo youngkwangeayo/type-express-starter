@@ -21,20 +21,7 @@ app.use(express.urlencoded({ limit: "300mb", extended: false }));
 app.use(express.json({ limit: "300mb" }));
 // app.use('/vol', express.static(process.env.storagePath));
 
-app.use( (req,_,next)=>{
-  // log(" [DEBUG] ", "origin: ",req.originalUrl, "pass : ",req.host,req.url,  "IP : ",req.ip);
-  log(" [DEBUG] ", req.method ,req.host,req.url,  "IP : ",req.ip);
-  next();
-})
 
-app.use('/ping', (_,res,_n)=>{
-  res.send('pong');
-});
-
-app.head('/',(req : Request,res,next)=>{
-    logger.debug(req.headers['user-agent']);
-    res.send();
-})
 
 app.use('/api', router);
 
