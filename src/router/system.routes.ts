@@ -9,13 +9,13 @@ const systemRouter = Router();
 systemRouter.use( (req :Request, res: Response, next : NextFunction)=>{
   const requestId = uuidv4();
   res.locals.requestId = requestId;
-  
+
   const startTime = Date.now();
 
   log(`[DEBUG] [${requestId}] `, req.method, req.host, req.url, "IP:", req.ip);
 
   res.on('finish', () => {
-    const duration = Date.now() - startTime;
+    const duration = (Date.now() - startTime).toFixed(2) ;
     log(`[DEBUG] [${requestId}] Response completed -`, req.method, req.url, "Status:", res.statusCode, `Duration: ${duration}ms`);
   });
 
