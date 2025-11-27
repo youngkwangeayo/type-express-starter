@@ -11,11 +11,12 @@ systemRouter.use( (req :Request, res: Response, next : NextFunction)=>{
   res.locals.requestId = requestId;
 
   const startTime = Date.now();
-
+  
+  log(`[INFO] [${requestId}] ${req.headers['x-forwarded-for'] || req.ip} : ${req.headers['user-agent']} -- ${req.method.toUpperCase()} / ${req.hostname+req.url} / ${JSON.stringify(req.body)}`);
   log(`[DEBUG] [${requestId}] `, req.method, req.host, req.url, "IP:", req.ip);
 
   res.on('finish', () => {
-    const duration = (Date.now() - startTime).toFixed(2) ;
+    const duration =( (Date.now() - startTime)/1000).toFixed(2) ;
     log(`[DEBUG] [${requestId}] Response completed -`, req.method, req.url, "Status:", res.statusCode, `Duration: ${duration}ms`);
   });
 

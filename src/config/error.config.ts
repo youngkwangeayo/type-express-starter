@@ -7,12 +7,13 @@ import { log } from "console";
 
 const errorHandler = (error: IAPIErrorREsopnse | any, req: Request, res: Response, next: NextFunction) => {
 
+    log(`[DEBUG] [${res.locals.requestId}] ${JSON.stringify(error.stack)}`);
+
     if (error instanceof APIError) {
-        res.status(error.state).send({error : error});
+        res.status(error.state).send({ error: error });
         return;
     };
 
-    log(`[DEBUG] [${res.locals.requestId}] ${error.stack}`);
 
     const consistencyError: IAPIErrorREsopnse = {
         code: 0,
@@ -21,7 +22,7 @@ const errorHandler = (error: IAPIErrorREsopnse | any, req: Request, res: Respons
         reason: "test good"
     };
 
-    res.status(consistencyError.state).send({error : consistencyError});
+    res.status(consistencyError.state).send({ error: consistencyError });
 
 };
 
