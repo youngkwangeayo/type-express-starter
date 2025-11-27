@@ -29,6 +29,6 @@ app.use('/api', router);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  redis.connect();
+  // redis.connect();
   logger.debug(`Server is running on http://localhost:${PORT}`);
 });
